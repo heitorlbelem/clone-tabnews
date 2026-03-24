@@ -5,9 +5,9 @@ import database from "infra/database";
 const ALLOWED_METHODS = ["GET", "POST"];
 
 async function migrations(request, response) {
-  if (!ALLOWED_METHODS.includes(request.method)) {
-    return response.status(405).end();
-  }
+  // if (!ALLOWED_METHODS.includes(request.method)) {
+  //   return response.status(405).end();
+  // }
 
   const dbClient = await database.getNewClient();
   const defaultMigrationOptions = {
@@ -36,6 +36,8 @@ async function migrations(request, response) {
     }
     return response.status(200).json(migratedMigrations);
   }
+
+  return response.status(405).end();
 }
 
 export default migrations;
