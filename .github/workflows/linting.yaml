@@ -14,7 +14,7 @@ jobs:
       - run: npm ci
       - run: npm run lint:prettier:check
   eslint:
-    name: eslint
+    name: ESLint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -22,9 +22,4 @@ jobs:
         with:
           node-version: "lts/hydrogen"
       - run: npm ci
-      - uses: sibiraj-s/action-eslint@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          eslint-args: "--ignore-path=.gitignore --quiet"
-          extensions: "js,jsx,ts,tsx"
-          annotations: true
+      - run: npm run lint:eslint:check
