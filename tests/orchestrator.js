@@ -13,6 +13,8 @@ async function fetchStatusPage() {
   if (response.status !== 200) throw Error();
 }
 
-export default {
+const orchestrator = {
   waitForAllServices,
 };
+
+export default orchestrator;
