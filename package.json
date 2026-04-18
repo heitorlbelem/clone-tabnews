@@ -15,8 +15,9 @@
     "lint:eslint:check": "next lint --dir .",
     "prepare": "husky",
     "commit": "cz",
-    "dev": "npm run services:up && npm run services:wait:database && npm run migrations:up && next dev",
+    "dev": "trap 'npm run services:stop' SIGINT; npm run services:up && npm run services:wait:database && npm run migrations:up && next dev",
     "test": "npm run services:up && concurrently -n next,jest --hide next -k -s command-jest \"next dev\" \"jest --runInBand\"",
+    "posttest": "npm run services:stop",
     "test:watch": "jest --watchAll --runInBand"
   },
   "author": "",
