@@ -26,20 +26,18 @@ function DatabaseStatus() {
 
   const databaseData = !isLoading && data ? data.dependencies.database : null;
 
-  const version = databaseData ? databaseData.version : "Carregando...";
-  const maxConnections = databaseData
-    ? databaseData.max_connections
-    : "Carregando...";
-  const opennedConnections = databaseData
-    ? databaseData.opened_connections
-    : "Carregando...";
-
   return (
     <>
       <h2>Banco de Dados</h2>
-      <div>Versão: {version}</div>
-      <div>Número máximo de conexões: {maxConnections}</div>
-      <div>Conexões abertas: {opennedConnections}</div>
+      {databaseData ? (
+        <>
+          <div>Versão: {databaseData.version}</div>
+          <div>Máximo de conexões: {databaseData.max_connections}</div>
+          <div>Máximo de conexões: {databaseData.opened_connections}</div>
+        </>
+      ) : (
+        <div>Carregando...</div>
+      )}
     </>
   );
 }
