@@ -1,27 +1,13 @@
 import database from "infra/database";
-import { InternalServerError, MethodNotAllowedError } from "infra/errors";
 import { createRouter } from "next-connect";
+import controller from "infra/controller";
 
 const router = createRouter();
 router.get(getHandler);
 
-export default router.handler({
-  onNoMatch: onNoMatchHandler,
-  onError: onErrorHandler,
-});
+export default router.handler(controller.errorHandlers);
 
-function onNoMatchHandler(request, response) {
-  const publicErrorObject = new MethodNotAllowedError();
-  return response.status(publicErrorObject.statusCode).json(publicErrorObject);
-}
-
-function onErrorHandler(error, request, response) {
-  const publicErrorObject = new InternalServerError({ cause: error });
-  console.error(publicErrorObject);
-  return response.status(publicErrorObject.statusCode).json(publicErrorObject);
-}
-
-async function getHandler(request, response) {
+async function getHandler(_request, response) {
   const databaseVersion = await database.query("SHOW SERVER_VERSION;");
   const databaseMaxConnections = await database.query("SHOW max_connections");
   const databaseName = process.env.POSTGRES_DB;
