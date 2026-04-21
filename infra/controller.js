@@ -9,6 +9,7 @@ function onErrorHandler(error, request, response) {
   const publicErrorObject = new InternalServerError({
     statusCode: error.statusCode,
     cause: error,
+    trackingId: error.trackingId,
   });
   console.error(publicErrorObject);
   return response.status(publicErrorObject.statusCode).json(publicErrorObject);

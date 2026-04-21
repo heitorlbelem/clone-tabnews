@@ -1,5 +1,6 @@
+import { v4 as uuidv4 } from "uuid";
 export class InternalServerError extends Error {
-  constructor({ cause, statusCode }) {
+  constructor({ cause, statusCode, trackingId }) {
     super("Erro interno acounteceu de forma inesperada.", {
       cause,
     });
@@ -7,6 +8,7 @@ export class InternalServerError extends Error {
     this.name = "InternalServerError";
     this.action = "Entre em contato com o Suporte";
     this.statusCode = statusCode || 500;
+    this.trackingId = trackingId;
   }
 
   toJSON() {
@@ -15,6 +17,7 @@ export class InternalServerError extends Error {
       message: this.message,
       action: this.action,
       status_code: this.statusCode,
+      error_tracking_id: this.trackingId,
     };
   }
 }
@@ -28,6 +31,7 @@ export class ServiceError extends Error {
     this.name = "ServiceError";
     this.action = "Verifique se o serviço está disponível";
     this.statusCode = 503;
+    this.trackingId = uuidv4();
   }
 
   toJSON() {
