@@ -1,4 +1,5 @@
-import { v4 as uuidv4 } from "uuid";
+import { randomUUID } from "node:crypto";
+
 export class InternalServerError extends Error {
   constructor({ cause, statusCode, trackingId }) {
     super("Erro interno acounteceu de forma inesperada.", {
@@ -31,7 +32,7 @@ export class ServiceError extends Error {
     this.name = "ServiceError";
     this.action = "Verifique se o serviço está disponível";
     this.statusCode = 503;
-    this.trackingId = uuidv4();
+    this.trackingId = randomUUID();
   }
 
   toJSON() {
