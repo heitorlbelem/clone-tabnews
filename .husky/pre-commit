@@ -1,2 +1,8 @@
 #!/bin/sh
-npx secretlint $(git diff --cached --name-only)
+FILES=$(git diff --cached --name-only)
+
+if [ -z "$FILES" ]; then
+  exit 0
+fi
+
+npx secretlint $FILES
