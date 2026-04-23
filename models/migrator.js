@@ -33,6 +33,7 @@ async function executeMigrationsCommand({ dryRun }) {
     return migrations;
   } catch (error) {
     const databaseServiceError = new ServiceError({
+      message: "Erro de conexão com o Banco de Dados",
       cause: error,
     });
     throw databaseServiceError;
